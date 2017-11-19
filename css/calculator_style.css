@@ -48,9 +48,11 @@ body,p, h1, h2{
 
 .cell{
   background-color: lightgray;
-  border-width: 1px;
-  border-color: gray;
-  border-style: solid;
+  border-right: 1px gray solid;
+  border-bottom: 1px gray solid;
+}
+.cell:first-of-type{
+  border-left: 1px gray solid;
 }
 
 .cell p{
