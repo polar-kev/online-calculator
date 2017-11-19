@@ -179,7 +179,7 @@ $( "#operator_equals" ).click(function() {
   }
   var answer = evaluate();
   number = answer;
-  console.log("expression: " + expression);
+  console.log("expression: " + expression + ", number: "+ number);
   displayValue();
   evaluated_flag = true;
 });
@@ -221,17 +221,16 @@ function evaluate(){
     //the first element in the stack should always be a number
     var b = expression.pop();
     //var operator = expression.pop();
-    //var a = parseFloat(expression.pop());
+    //var a = Number(expression.pop());
 
     if(b == 'divide'){
-      var a = parseFloat(expression.pop());
-      var c = temp_stack.pop();
-      //make sure element is a number and not a string
-      c = parseFloat(c);
+      var a = Number(expression.pop());
+      var c = Number(temp_stack.pop());
+
       temp_result = divide(a,c);
       temp_stack.push(temp_result);
     }else if(b == 'multiply'){
-      var a = parseFloat(expression.pop());
+      var a = Number(expression.pop());
       var c = temp_stack.pop();
       temp_result = multiply(a,c);
       temp_stack.push(temp_result);
@@ -245,16 +244,16 @@ function evaluate(){
   //main stack is empty and all divisions/multiplications from BEDMAS has been taken care of
   //proceed with additions and subtractions
   if(temp_stack.length > 1){
-    var a = parseFloat(temp_stack.pop());
+    var a = Number(temp_stack.pop());
     while(temp_stack.length > 1){
       var b = temp_stack.pop();
       if(b == 'add'){
-        var c = parseFloat(temp_stack.pop());
+        var c = Number(temp_stack.pop());
         a = add(a,c);
         console.log("a: "+a);
         temp_stack.push(a);
       }else if(b == 'subtract'){
-        var c = parseFloat(temp_stack.pop());
+        var c = Number(temp_stack.pop());
         a = subtract(a,c);
         temp_stack.push(a);
       }
@@ -262,6 +261,9 @@ function evaluate(){
   }
 
   var final_result = temp_stack[0];
+  if(isNaN(final_result)){
+    final_result = "Not a Number";
+  }
   console.log("final result: " + final_result);
   return final_result;
 }
